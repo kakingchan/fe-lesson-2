@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>homework1</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/thumb.css">
+    <script src="/javascripts/jquery.js"></script>
+    <script src="/javascripts/system.js"></script>
+    <script src="/javascripts/praise.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="testButton"></div>
+        <div id="testThumb" class="clearfix"></div>
+    </div>
+    <script type="text/javascript">
+        (function($) {
+            SystemJS.import('/javascripts/praise.js').then(function(m) {
+                $.fn.praiseButton = function(num) {
+                    var btn = new m.PraiseButton($(this), num);
+                    btn.initPriaseButton();
+                }
+                $.fn.thumb = function(num) {
+                    var btn = new m.Thumb($(this), num);
+                    btn.initThumb();
+                }
+                $('#testButton').praiseButton();
+                $('#testThumb').thumb();
+            });
+        })(jQuery);
+    </script>
+</body>
+
+</html>

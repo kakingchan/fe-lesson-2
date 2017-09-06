@@ -1,0 +1,137 @@
+.praise-button {
+    position: relative;
+}
+
+.praise-button-thumb {
+    position: relative;
+    width: 500px;
+    height: 430px;
+    float: left;
+}
+
+.praise-button-thumb.disabled {
+    pointer-events: none;
+}
+
+.praise-button-thumb.disabled .hand,
+.praise-button-thumb.disabled .hand::before,
+.praise-button-thumb.disabled .finger-thumb,
+.praise-button-thumb.disabled .finger-thumb::after,
+.praise-button-thumb.disabled .finger-group-1,
+.praise-button-thumb.disabled .finger-group-1::after,
+.praise-button-thumb.disabled .finger-group-2,
+.praise-button-thumb.disabled .finger-group-2::after {
+    background: #b3b3b3;
+    box-shadow: 0 0 4px 4px #b3b3b3 inset;
+}
+
+.praise-button-thumb .hand,
+.praise-button-thumb .hand::before,
+.praise-button-thumb .finger-thumb,
+.praise-button-thumb .finger-group-1,
+.praise-button-thumb .finger-group-1::after,
+.praise-button-thumb .finger-group-2,
+.praise-button-thumb .finger-group-2::after {
+    position: absolute;
+    background-color: #F3C5AD;
+    margin: 0;
+    padding: 0;
+}
+
+
+/*手臂  */
+
+.praise-button-thumb .hand::before {
+    content: "";
+    left: -185px;
+    top: 50px;
+    width: 200px;
+    height: 200px;
+    border-top: 2px solid #D68A63;
+}
+
+
+/*手掌  */
+
+.praise-button-thumb .hand {
+    left: 200px;
+    top: 120px;
+    width: 185px;
+    height: 300px;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+    border-color: #8C3E15;
+    border-style: solid;
+    border-width: 1px 0 1px 1px;
+    position: relative;
+}
+
+
+/*拇指*/
+
+.praise-button-thumb .finger-thumb {
+    top: 128px;
+    left: 213px;
+    width: 150px;
+    height: 76px;
+    transform-origin: -2px 0%;
+    transform: rotate(-60deg);
+    border-top-right-radius: 38px;
+    border-bottom-right-radius: 38px;
+    border-top: 1px solid #B9511B;
+    border-right: 1px solid #B9511B;
+    box-shadow: 0 0 4px 4px #F3C5AD inset;
+    background: linear-gradient(to left, #FAE7DD, #F3C5AD, #F3C5AD);
+}
+
+.praise-button-thumb .finger-thumb::after {
+    content: "";
+    position: absolute;
+    background: linear-gradient(to left, #E8B092, #F3C5AD, #F3C5AD);
+    width: 75px;
+    height: 68px;
+    left: 0;
+    top: 4px;
+    border-top-right-radius: 34px;
+    border-bottom-right-radius: 34px;
+}
+
+
+/* 四指 */
+
+.praise-button-thumb .finger-group-1,
+.praise-button-thumb .finger-group-1::after,
+.praise-button-thumb .finger-group-2,
+.praise-button-thumb .finger-group-2::after {
+    width: 75px;
+    height: 74px;
+    border-top-right-radius: 32px;
+    border-bottom-right-radius: 32px;
+    border: 1px solid #B9511B;
+    border-left: none;
+    box-shadow: 0 0 4px 4px #F3C5AD inset;
+    background: linear-gradient(to left, #FAE7DD, #F3C5AD);
+}
+
+.praise-button-thumb .finger-group-1 {
+    top: 120px;
+    left: 385px;
+    height: 75px;
+}
+
+.praise-button-thumb .finger-group-1::after {
+    content: "";
+    top: 75px;
+    left: 0;
+}
+
+.praise-button-thumb .finger-group-2 {
+    top: 271px;
+    left: 385px;
+}
+
+.praise-button-thumb .finger-group-2::after {
+    content: "";
+    top: 74px;
+    left: 0;
+}

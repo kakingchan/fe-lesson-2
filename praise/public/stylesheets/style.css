@@ -1,0 +1,29 @@
+body {
+    background: -webkit-linear-gradient(left top, #96D38D, #D0D8CB);
+    background: -o-linear-gradient(bottom right, #96D38D, #D0D8CB);
+    background: -moz-linear-gradient(bottom right, #96D38D, #D0D8CB);
+    background: linear-gradient(to bottom right, #96D38D, #D0D8CB);
+    background-repeat: no-repeat;
+}
+
+.wrapper {
+    width: 900px;
+    margin: 0 auto;
+    padding: 0;
+    height: 600px;
+    overflow: hidden;
+    padding-top: 100px;
+}
+
+.clearfix:after {
+    content: "";
+    height: 0;
+    line-height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both
+}
+
+.clearfix {
+    zoom: 1;
+}
