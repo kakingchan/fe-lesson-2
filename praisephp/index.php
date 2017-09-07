@@ -1,40 +1,83 @@
 <?php  
+    header ( 'Content-Type:application/json; charset=utf-8' );
+    $con = null;
+    $response = new stdClass;
+    if(!isset($_SERVER['REQUEST_METHOD'])){
+        $response = array('code'=>'no','content'=>'server error','data'=>'');
+        echo json_encode($response);
+        return;
+    }
+    
+    if(!strcasecmp($_SERVER['REQUEST_METHOD'],'GET') && isset($_GET['id'])){
+        $id = $_GET['id'];
+        $con = connect();
+        $data = query($con);
+        while($row = mysqli_fetch_array($data)){
+            if($row['id'] == $id){
+                $response = array('code'=>'ok','content'=>'get success','data'=>array('id'=>$row['id'],'count'=>$row['count']));
+                echo json_encode($response);
+                return;
+            }else{
+                $response = array('code'=>'no','content'=>'get failed','data'=>'');
+                echo json_encode($response);
+                return;
+            }
+        }
+        
+    }else if(!strcasecmp($_SERVER['REQUEST_METHOD'],'POST')){
+
+        // $data=file_get_contents("php://input");
+        // $arr = json_decode($data, true);
+
+        echo $_POST['id']
+
+        // if(isset($arr['count'])&&isset($arr['id'])){
+        //     $con = connect();
+        //     $result = modify($con,$arr['count'],$arr['id']);       
+        //     if($result){
+        //         $response = array('code'=>'ok','content'=>'post success','data'=>'');
+        //         echo json_encode($response);
+        //         return;
+        //     }
+        // }else{
+        //     $response = array('code'=>'no','content'=>'post failed','data'=>'');
+        //     echo json_encode($response);
+        //     return;
+        // }
+        
+    }else{
+        $response = array('code'=>'no','content'=>'error method','data'=>'');
+        echo json_encode($response);
+        return;
+    }
+
 
     //连接数据库  
-    $servername="localhost";  
-    $username="root";  
-    $userpassword="";  
-    $dbname = "praise";  
-      
-    $connent=new mysqli($servername,$username,$userpassword,$dbname);
-    $connent->set_charset('utf8');  
-    if($connent->connect_error){  
-        die("连接失败: " . $connent->connect_error);  
-    }else{  
-        echo "连接成功<br>";  
-    }  
+    function connect(){
+        $servername="localhost";  
+        $username="root";  
+        $userpassword="";  
+        $dbname = "praise";  
+        $connent=new mysqli($servername,$username,$userpassword,$dbname);
+        $connent->set_charset('utf8');  
+        if($connent->connect_error){  
+            die("连接失败: " . $connent->connect_error);
+        }
+        return $connent;
+    }
     
     //查询数据
     function query($connent){
-        $result = $connent->query("select * from praisecount ");
-        while($row = mysqli_fetch_array($result)){
-            echo("id:".$row['id'] . "<br>" ."count:". $row['count']);
-        }
-        $result->close();
+        $result = $connent->query("select * from praisecount");
+        mysqli_close($connent);  
+        return $result;
     }
 
-    //查询数据
-    function modify($count,$connent){
-        $result = $connent->query("update praisecount set count={$count} where id=1");
-        if ($result) {
-            echo("sql_update table ok");
-        } else {
-            echo("sql_update table failed:" . mysqli_error($con));
-        }
+    //修改数据
+    function modify($connent,$count,$id){
+        $result = $connent->query("update praisecount set count={$count} where id={$id}");
+        mysqli_close($connent);  
+        return $result;
     }
 
-
-
-    //关闭数据库  
-    mysqli_close($connent);  
-?>  
+?>
