@@ -3,7 +3,7 @@
 
 //+1
 export const praiseCount = function(count) {
-    return typeof count !== 'number' ? NaN : ++count;
+    return ++count;
 }
 
 export class PraiseButton {
@@ -40,7 +40,7 @@ export class PraiseButton {
         //初始化dom
     initPriaseButton() {
         this.selector.append('<button class="praise-button" style="width:100%">点赞</button>');
-        this.selector.click(this.clickPriaseButton.bind(this, $(this.selector.selector + '>.praise-button')));
+        this.selector.click(throttle(this.clickPriaseButton.bind(this, $(this.selector.selector + '>.praise-button')), 500));
     }
 }
 
@@ -56,15 +56,25 @@ export class Thumb extends PraiseButton {
             '<div class="finger-group-1"></div>' +
             '<div class="finger-group-2"></div>' +
             '</div>');
-        this.selector.click(this.clickThumb.bind(this, $(this.selector.selector + '>.praise-button-thumb')));
+        this.selector.click(throttle(this.clickThumb.bind(this, $(this.selector.selector + '>.praise-button-thumb')), 500));
     }
     clickThumb(clicker) {
         super.clickPriaseButton(clicker);
-        console.log(this.count);
-        if (this.count >= 10) {
+        if (this.count > 10) {
             this.selector.unbind('click');
             clicker.addClass('disabled');
             console.log('it has already praised 10 times');
+        } else {
+            axios.get('/api/addOnce?id=1').then(res => {
+                if (res.data.code == 'ok') {
+                    let count = res.data.count
+                    console.log('当前点击次数', this.count)
+                    console.log('服务器记录次数', count)
+                }
+            }).catch(err => {
+                console.log(err)
+            })
         }
+
     }
 }

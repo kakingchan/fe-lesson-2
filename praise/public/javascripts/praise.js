@@ -93,7 +93,7 @@
     }();
 
     var praiseCount = exports.praiseCount = function praiseCount(count) {
-        return typeof count !== 'number' ? NaN : ++count;
+        return ++count;
     };
 
     var PraiseButton = exports.PraiseButton = function () {
@@ -141,7 +141,7 @@
             key: 'initPriaseButton',
             value: function initPriaseButton() {
                 this.selector.append('<button class="praise-button" style="width:100%">点赞</button>');
-                this.selector.click(this.clickPriaseButton.bind(this, $(this.selector.selector + '>.praise-button')));
+                this.selector.click(throttle(this.clickPriaseButton.bind(this, $(this.selector.selector + '>.praise-button')), 500));
             }
         }]);
 
@@ -164,17 +164,28 @@
             value: function initThumb() {
                 console.log(this.selector);
                 this.selector.append('<div class="praise-button-thumb">' + '<div class="hand"></div>' + '<div class="finger-thumb"></div>' + '<div class="finger-group-1"></div>' + '<div class="finger-group-2"></div>' + '</div>');
-                this.selector.click(this.clickThumb.bind(this, $(this.selector.selector + '>.praise-button-thumb')));
+                this.selector.click(throttle(this.clickThumb.bind(this, $(this.selector.selector + '>.praise-button-thumb')), 500));
             }
         }, {
             key: 'clickThumb',
             value: function clickThumb(clicker) {
+                var _this2 = this;
+
                 _get(Thumb.prototype.__proto__ || Object.getPrototypeOf(Thumb.prototype), 'clickPriaseButton', this).call(this, clicker);
-                console.log(this.count);
-                if (this.count >= 10) {
+                if (this.count > 10) {
                     this.selector.unbind('click');
                     clicker.addClass('disabled');
                     console.log('it has already praised 10 times');
+                } else {
+                    axios.get('/api/addOnce?id=1').then(function (res) {
+                        if (res.data.code == 'ok') {
+                            var count = res.data.count;
+                            console.log('当前点击次数', _this2.count);
+                            console.log('服务器记录次数', count);
+                        }
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
                 }
             }
         }]);
